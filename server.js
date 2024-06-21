@@ -25,7 +25,11 @@ app.use("/", (req, res) => {
   res.send("Server is online");
 });
 
+// import routes
+import api from "./routes/api.js";
+
 // rest API
+app.use("/api/v1", api);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`.bgCyan);
