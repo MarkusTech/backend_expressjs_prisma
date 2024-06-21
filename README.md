@@ -15,3 +15,7 @@
 # Nodemailer
 
 # BullMQ
+
+# VineJS
+
+> npm i @vinejs/vine
