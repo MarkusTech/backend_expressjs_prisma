@@ -20,16 +20,11 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Test API
-app.use("/", (req, res) => {
-  res.send("Server is online");
-});
-
 // import routes
-import api from "./routes/api.js";
+import apiRoutes from "./routes/api.js";
 
 // rest API
-app.use("/api/v1", api);
+app.use("/api/v1", apiRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`.bgCyan);
