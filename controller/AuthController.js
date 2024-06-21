@@ -11,7 +11,7 @@ class AuthController {
       const validator = vine.compile(registerSchema);
       const payload = await validator.validate(body);
 
-      //   * Check if email exist
+      // Check if email exists
       const findUser = await prisma.users.findUnique({
         where: {
           email: payload.email,
@@ -21,12 +21,12 @@ class AuthController {
       if (findUser) {
         return res.status(400).json({
           errors: {
-            email: "Email already taken.please use another one.",
+            email: "Email already taken. Please use another one.",
           },
         });
       }
 
-      //   * Encrypt the password
+      // Encrypt the password
       const salt = bcrypt.genSaltSync(10);
       payload.password = bcrypt.hashSync(payload.password, salt);
 
@@ -41,12 +41,11 @@ class AuthController {
     } catch (error) {
       console.log("The error is", error);
       if (error instanceof errors.E_VALIDATION_ERROR) {
-        // console.log(error.messages);
         return res.status(400).json({ errors: error.messages });
       } else {
         return res.status(500).json({
           status: 500,
-          message: "Something went wrong.Please try again.",
+          message: "Something went wrong. Please try again.",
         });
       }
     }
