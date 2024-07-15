@@ -1,6 +1,6 @@
 import prisma from "../config/db.config.js";
 import vine, { errors } from "@vinejs/vine";
-import { registerSchema } from "../validations/authValidation.js";
+import { loginSchema, registerSchema } from "../validations/authValidation.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -38,6 +38,26 @@ class AuthController {
         message: "User created successfully",
         user,
       });
+    } catch (error) {
+      console.log("The error is", error);
+      if (error instanceof errors.E_VALIDATION_ERROR) {
+        return res.status(400).json({ errors: error.messages });
+      } else {
+        return res.status(500).json({
+          status: 500,
+          message: "Something went wrong. Please try again.",
+        });
+      }
+    }
+  }
+
+  static async login(req, res) {
+    try {
+      const body = req.body;
+
+      const validator = vine.compile(loginSchema);
+      const payload = await validator.validate(body);
+      return res.json({ payload });
     } catch (error) {
       console.log("The error is", error);
       if (error instanceof errors.E_VALIDATION_ERROR) {
