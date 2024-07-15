@@ -3,7 +3,6 @@ import vine, { errors } from "@vinejs/vine";
 import { loginSchema, registerSchema } from "../validations/authValidation.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { messages } from "@vinejs/vine/defaults";
 
 class AuthController {
   static async register(req, res) {
